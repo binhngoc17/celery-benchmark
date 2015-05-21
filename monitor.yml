@@ -1,0 +1,20 @@
+name: monitor
+root: <%= ENV['PWD'] %>
+windows:
+  - monitor:
+      layout: even-horizontal
+      panes:
+        - top_eventlet_worker: top -pid $(cat /tmp/eventlet_worker)
+        - top_process_worker:  top -pid $(cat /tmp/process_worker)
+  - flower:
+      layout: even-horizontal
+      panes:
+        - flower:
+          - source .venv/bin/activate
+          - celery flower -A tasks
+  - command:
+      layout: main-vertical
+      panes:
+        - trigger_tasks:
+          - source .venv/bin/activate
+          - python trigger.py

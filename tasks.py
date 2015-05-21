@@ -12,4 +12,4 @@ celery = Celery('tasks', broker=BROKER_URL, backend=CELERY_RESULT_BACKEND)
 @celery.task()
 def make_req():
     resp = requests.get('http://localhost:3000/api')
-    print resp.json()
+    print resp.text

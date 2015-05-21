@@ -12,11 +12,9 @@
 from tasks import make_req
 count = 0
 while True:
-	count = 0
-    while True:
-        count += 1
-        if count > 1000:
-            break
-        make_req.delay()
+    count += 1
+    if count > 100000:
+        break
+    make_req.delay()
 
 print 'DONE'

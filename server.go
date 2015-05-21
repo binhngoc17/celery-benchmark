@@ -1,18 +1,17 @@
 package main
 
 import (
-	"github.com/go-martini/martini"
+	"net/http"
+	"fmt"
 	"time"
 )
 
 func main() {
-	m := martini.Classic()
-
-	m.Get("/api", func(r render.Render) {
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		time.Sleep(time.Second * 1)
-		r.JSON(200, map[string]interface{}{"hello": "world"})
+		fmt.Fprintf(w, "Hello world")
 	})
 
-	m.Run()
+	http.ListenAndServe(":3000", nil)
 
 }

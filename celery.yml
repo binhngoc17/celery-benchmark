@@ -1,0 +1,19 @@
+name: celery
+root: <%= ENV['PWD'] %>
+windows:
+  - broker:
+      layout: even-horizontal
+      panes:
+        - redis-server
+        - redis-stat --verbose --server=8081
+  - workers:
+      layout: even-vertical
+      panes:
+        - worker1:
+          - source .venv/bin/activate
+          - ulimit -n 10000
+          - celery worker -n eventlet_worker -A tasks -P eventlet -c 1001 --pid=/tmp/eventlet_worker
+  - server:
+      layout: even-vertical
+      panes:
+        - server: go run server.go
